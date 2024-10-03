@@ -1,0 +1,50 @@
+import sys
+from pathlib import Path
+from PyInstaller.utils.hooks import collect_all
+
+# Path to the main Python script
+main_script = 'C:/Users/Abhishek Hesh/OneDrive/Desktop/Tasks/Task6/gui.py'
+
+# Additional files or directories to include
+additional_files = [
+    ('C:/Users/Abhishek Hesh/OneDrive/Desktop/Tasks/Task6/scrapper.py', 'C:/Users/Abhishek Hesh/OneDrive/Desktop/Tasks/Task6'),
+    # Add more files or directories as needed
+]
+
+# Additional hooks
+datas = collect_all(main_script, additional_files)
+
+a = Analysis(
+    [main_script],
+    pathex=[Path(__file__).parent],
+    datas=datas,
+    hiddenimports=[],
+    hookspath=[],
+    runtime_hooks=[],
+    excludes=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=None,
+    noarchive=False
+)
+
+# Specifying output options
+pyz = PYZ(a.pure, a.zipped_data,
+          cipher=block_cipher)
+exe = EXE(pyz,
+          a.scripts,
+          exclude_binaries=True,
+          name='YourAppName',
+          debug=False,
+          strip=False,
+          upx=True,
+          console=False)
+
+# Collating the output
+coll = COLLECT(exe,
+               a.binaries,
+               a.zipfiles,
+               a.datas,
+               strip=False,
+               upx=True,
+               name='YourAppName')
